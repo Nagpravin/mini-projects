@@ -1,0 +1,411 @@
+ create database AirportManagementSystem;
+
+use AirportManagementSystem;
+
+  create table model
+     ( model_no varchar(6) NOT NULL,
+       capacity int,
+       weight int,
+       primary key (model_no));
+
+
+  INSERT INTO Model
+     VALUES  ("DC-10",20000,80000),
+      ("AC-50",30000,90000),
+     ("PR-79",15000,85000),
+      ("TK-21",40000,95000),
+     ("AT-30",20000,90000);
+
+  create table Test
+     ( FAA_test_no varchar(5) NOT NULL,
+     Name varchar (15),
+     Model_no varchar(6),
+     max_score int,
+     primary key(FAA_test_no),
+     foreign key (Model_no) references model(model_no));
+
+  alter table test
+     modify faa_test_no varchar(10) not null;
+
+  INSERT INTO Test
+     VALUES ('A1080C','FOI','TK-21',80),
+     ('A10900','FIA','PR-79',90),
+     ('A1070C','FOI','AT-30',80),
+     ('A1050C','FOI','AC-50',70),
+     ('A1070D','FIA','DC-10',95);
+
+  create table airport
+     ( Name varchar(15) not null,
+       Airport_id varchar(9) not null,
+       primary key (Airport_id));
+
+  insert into airport values
+     ('Rajiv Gandhi International Airport','Y-881'),
+     ('Sri Guru Ram dass Jee International Airport','W-224'),
+     ('Indira Gandhi International Airport','T-998'),
+     ('Biju Patnaik International Airport','Z-338'),
+     ('Lokpriya Gopinath Bordoloi International Airport','Y-665');
+
+
+  create table Airplane
+     (Reg_no int NOT NULL,
+      Model_no varchar(6),
+      Airport_id varchar(9),
+      foreign key (Airport_id) references Airport(Airport_id),
+     foreign key (Model_no) references model(model_no));
+
+
+mysql> insert into airplane values
+    ->  (7000,'DC-10','Y-881'),
+    -> (7000,'AC-50','W-224'),
+    ->  (7000,'PR-79','T-998'),
+    -> (7000,'AT-30','Y-665');
+
+mysql> create table employee
+    -> (ssn int not null,
+    -> union_membership_no int,
+    -> Name varchar(15),
+    -> primary key (ssn));
+
+mysql> insert into employee values (1234,213,'Tushar Singh'),
+    -> (2234,458,'Saloni Nagar'),
+    -> (3234,333,'Lakshita Singh'),
+    -> (4234,444,'Aravind Aswal'),
+    -> (5234,565,'Harish chandra');
+
+
+mysql> create table Technician
+    -> (ssn int not null,
+    ->  union_membership_no int,
+    ->  Name varchar(15),
+    ->  Type varchar(15),
+    -> Address varchar(50),
+    -> Phone_no varchar(11),
+    -> Salary int,
+    -> foreign key (ssn) references Employee (ssn));
+
+mysql> insert into Technician
+    -> values (1234,213,'Tushar Singh','Auto Mechanic','E-24 Husdon Lane',9870008976,50000),
+    ->  (2234,458,'Saloni Nagar','Engineer','F-121 Rajendra Lane',7042234560,55000),
+    ->  (3234,333,'Lakshita Singh','Auto Mechanic','B-21/A Shalimar Lane',9896745321,30000),
+    ->  (4234,444,'Aravind Asawal','Engineer','A-36/A Husdon Lane',8770008976,90000),
+    ->  (5234,565,'Harish Chandra','Engineer','F-23 Noida',6742234560,45000);
+
+
+
+mysql> create table Traffic_controllers
+    -> (ssn int,
+    -> Name varchar(15),
+    -> Medical_exam_date DATE,
+    -> foreign key (ssn) references employee (ssn));
+
+
+mysql> INSERT INTO Traffic_controllers values (1234,'T Singh','2021-09-01'),
+    ->  (2234,'Saloni Nagar','2021-09-01'),
+    ->  (3234,'Lakshita Singh','2022-01-01'),
+    ->  (4234,'A Asawal','2021-09-01'),
+    ->  (5234,'Harish chandra','2022-09-01');
+
+mysql> select * from airplane;
++--------+----------+------------+
+| Reg_no | Model_no | Airport_id |
++--------+----------+------------+
+|   7000 | DC-10    | Y-881      |
+|   7000 | AC-50    | W-224      |
+|   7000 | PR-79    | T-998      |
+|   7000 | AT-30    | Y-665      |
++--------+----------+------------+
+
+mysql> select * from airport;
++--------------------------------------------------+------------+
+| name                                             | Airport_id |
++--------------------------------------------------+------------+
+| Indira Gandhi International Airport              | T-998      |
+| Sri Guru Ram dass Jee International Airport      | W-224      |
+| Lokpriya Gopinath Bordoloi International Airport | Y-665      |
+| Rajiv Gandhi International Airport               | Y-881      |
+| Biju Patnaik International Airport               | Z-338      |
++--------------------------------------------------+------------+
+
+
+mysql> select * from employee;
++------+---------------------+----------------+
+| ssn  | union_membership_no | Name           |
++------+---------------------+----------------+
+| 1234 |                 213 | Tushar Singh   |
+| 2234 |                 458 | Saloni Nagar   |
+| 3234 |                 333 | Lakshita Singh |
+| 4234 |                 444 | Aravind Aswal  |
+| 5234 |                 565 | Harish chandra |
++------+---------------------+----------------+
+
+
+mysql> select * from model;
++----------+----------+--------+
+| model_no | capacity | weight |
++----------+----------+--------+
+| AC-50    |    30000 |  90000 |
+| AT-30    |    20000 |  90000 |
+| DC-10    |    20000 |  80000 |
+| PR-79    |    15000 |  85000 |
+| TK-21    |    40000 |  95000 |
++----------+----------+--------+
+
+
+mysql> select * from technician;
++------+---------------------+----------------+---------------+----------------------+------------+--------+
+| ssn  | union_membership_no | Name           | Type          | Address              | Phone_no   | salary |
++------+---------------------+----------------+---------------+----------------------+------------+--------+
+| 1234 |                 213 | Tushar Singh   | Auto Mechanic | E-24 Husdon Lane     | 9870008976 |  50000 |
+| 2234 |                 458 | Saloni Nagar   | Engineer      | F-121 Rajendra Lane  | 7042234560 |  55000 |
+| 3234 |                 333 | Lakshita Singh | Auto Mechanic | B-21/A Shalimar Lane | 9896745321 |  30000 |
+| 4234 |                 444 | Aravind Asawal | Engineer      | A-36/A Husdon Lane   | 8770008976 |  90000 |
+| 5234 |                 565 | Harish Chandra | Engineer      | F-23 Noida           | 6742234560 |  45000 |
++------+---------------------+----------------+---------------+----------------
+
+
+mysql> select * from test;
++-------------+------+----------+-----------+
+| faa_test_no | Name | Model_no | max_score |
++-------------+------+----------+-----------+
+| A1050C      | FOI  | AC-50    |        70 |
+| A1070C      | FOI  | AT-30    |        80 |
+| A1070D      | FIA  | DC-10    |        95 |
+| A1080C      | FOI  | TK-21    |        80 |
+| A10900      | FIA  | PR-79    |        90 |
++-------------+------+----------+-----------+
+
+
+mysql> select * from traffic_controllers;
++------+----------------+-------------------+
+| ssn  | Name           | Medical_exam_date |
++------+----------------+-------------------+
+| 1234 | T Singh        | 2021-09-01        |
+| 2234 | Saloni Nagar   | 2021-09-01        |
+| 3234 | Lakshita Singh | 2022-01-01        |
+| 4234 | A Asawal       | 2021-09-01        |
+| 5234 | Harish chandra | 2022-09-01        |
++------+----------------+-------------------+
+
+
+mysql> insert into employee
+    -> values(6234,666,'Shree Bhosale');
+
+
+Q1) select Distinct union membership from employee table
+Ans. select distinct union_membership_no from employee;
+
+
+Q2) Display all the technician whos name ends with 'a'
+Ans. select * from technician where name like '%a';
+
+
+Q3) Salary of Technician who is also a traffic controller
+Ans. Select salary from Technician
+          Where ssn IN
+select ssn from Traffic_controllers;
+
+Q4)Update the name of employee with employee id = 1234 to 'Alfred John'
+Ans. Update Employee
+          Set Name = "Alfred John"
+Where ssn = 1234
+
+Q5) Rename table test to test01 and then undo it
+Ans.  alter table test rename to test01;
+           alter table test01 rename to test;
+
+Q6) Create a View including test_no , Name, Model_no Whose Efficiency is not less than 70
+Ans. mysql> create view GoodScore
+    -> As
+    -> SELECT faa_test_no,Name,Model_no
+    -> From test
+    -> WHERE max_score >= 70;
+
+Q7) Drop Created Views
+Ans.  drop view GoodScore;
+
+
+Q8) Display max Salary from Technician Table
+Ans. 
+mysql> select max(salary) from technician;
++-------------+
+| max(salary) |
++-------------+
+|       90000 |
++-------------+
+
+Q9) Display  the name of the Technician who has maximum salary Using nested Subquery
+Ans.
+mysql> Select Name from Technician
+    -> Where Salary = (Select Max(salary) from Technician);
++----------------+
+| Name           |
++----------------+
+| Aravind Asawal |
++----------------+
+
+Q10) Display the 2nd highest Salary as  'Maxof2nd'.
+Ans.
+mysql> Select Max(Salary) As Maxof2nd
+    -> From Technician Where Salary <> (Select Max(Salary) from Technician);
++----------+
+| Maxof2nd |
++----------+
+|    55000 |
+
+
+Q11) Display all the details of the Technician Who has 2nd highest salary
+Ans. 
+mysql> Select * from Technician Where
+    -> Salary = ( Select Max(salary) from Technician Where
+    ->  Salary <> (Select Max(salary) from Technician ));
++------+---------------------+--------------+----------+---------------------+------------+--------+
+| ssn  | union_membership_no | Name         | Type     | Address             | Phone_no   | salary |
++------+---------------------+--------------+----------+---------------------+------------+--------+
+| 2234 |                 458 | Saloni Nagar | Engineer | F-121 Rajendra Lane | 7042234560 |  55000 |
++------+---------------------+--------------+----------+---------------------+------------+--------+
+
+
+Q12) Write A Query to display all the types of Technician along with number of Technicians working in it.
+Ans.
+
+mysql> Select Type,count(*) from Technician Group by Type;
++---------------+----------+
+| Type          | count(*) |
++---------------+----------+
+| Auto Mechanic |        2 |
+| Engineer      |        3 |
++---------------+----------+
+
+
+Q13)Write A Query to display all Types of Technician Along with no of Technician Where no of Technicians are less Than 3
+Ans.
+mysql> Select type,count(*) from Technician Group by Type Having count(*) < 3;
++---------------+----------+
+| type          | count(*) |
++---------------+----------+
+| Auto Mechanic |        2 |
++---------------+----------+
+
+Q14) Write a query to display the name of the Technicians along with type Where no of Technicians are less than 3
+Ans.
+
+mysql> Select name, type from Technician
+    -> Where type IN ( Select type from Technician group by type having count(*) < 3);
++----------------+---------------+
+| name           | type          |
++----------------+---------------+
+| Tushar Singh   | Auto Mechanic |
+| Lakshita Singh | Auto Mechanic |
++----------------+---------------+
+
+Q15) Write a Query to display highest salary department wise and name of Technician who has the highest salary
+Ans.
+mysql> select name,type,salary from Technician Where
+    -> salary in ( select max(salary) from Technician group by type);
++----------------+---------------+--------+
+| name           | type          | salary |
++----------------+---------------+--------+
+| Tushar Singh   | Auto Mechanic |  50000 |
+| Aravind Asawal | Engineer      |  90000 |
++----------------+---------------+--------+
+
+Q16)Display the name of the Technicians who are working as a Technician in the company.
+Ans.
+
+mysql> select name from employee
+    -> where ssn in ( select ssn from technician);
++----------------+
+| name           |
++----------------+
+| Tushar Singh   |
+| Saloni Nagar   |
+| Lakshita Singh |
+| Aravind Aswal  |
+| Harish chandra |
++----------------+
+
+Q17) Find the detail of employee who is working as Technician using exist condition
+Ans.
+mysql> select * from employee e1
+    -> Where  exists ( Select ssn from Technician t1
+    -> Where e1.ssn = t1.ssn);
++------+---------------------+----------------+
+| ssn  | union_membership_no | Name           |
++------+---------------------+----------------+
+| 1234 |                 213 | Tushar Singh   |
+| 2234 |                 458 | Saloni Nagar   |
+| 3234 |                 333 | Lakshita Singh |
+| 4234 |                 444 | Aravind Aswal  |
+| 5234 |                 565 | Harish chandra |
++------+---------------------+----------------+
+
+Q18)Find the detail of employee who is not working as Technician using exist condition
+Ans.
+mysql> select * from employee e1
+    -> Where not exists (select ssn from Technician t1
+    -> where e1.ssn = t1.ssn);
++------+---------------------+---------------+
+| ssn  | union_membership_no | Name          |
++------+---------------------+---------------+
+| 6234 |                 666 | Shree Bhosale |
++------+---------------------+---------------+
+
+// Joins
+Q19)find the employee names who are working as technician using natural join.
+Ans.         //Natural Join
+mysql> select e1.name from employee e1,Technician t1
+    -> Where e1.ssn = t1.ssn;
++----------------+
+| name           |
++----------------+
+| Tushar Singh   |
+| Saloni Nagar   |
+| Lakshita Singh |
+| Aravind Aswal  |
+| Harish chandra |
++----------------+
+
+Q20)find the names of employee who has medical Exam on same date using self join
+Ans.//Self Join
+mysql> select distinct t1.name from traffic_controllers as t1,traffic_controllers as t2
+    -> Where t1.medical_exam_date = t2.medical_exam_date
+    -> AND
+    ->  t1.ssn <> t2.ssn;
++--------------+
+| name         |
++--------------+
+| A Asawal     |
+| Saloni Nagar |
+| T Singh      |
++--------------+
+
+Q21) Apply left outer join on employee and technician
+Ans.  // Left Outer Join
+
+mysql> select  t1.ssn,t1.union_membership_no,t1.Name from employee t1 left outer join Technician t2
+    -> On (t1.ssn = t2.ssn);
++------+---------------------+----------------+
+| ssn  | union_membership_no | Name           |
++------+---------------------+----------------+
+| 1234 |                 213 | Tushar Singh   |
+| 2234 |                 458 | Saloni Nagar   |
+| 3234 |                 333 | Lakshita Singh |
+| 4234 |                 444 | Aravind Aswal  |
+| 5234 |                 565 | Harish chandra |
+| 6234 |                 666 | Shree Bhosale  |
++------+---------------------+----------------+
+
+Q22).Apply Right outer join on employee and Technician
+Ans. 
+mysql> select t1.name,t2.type,t2.salary from employee t1 right outer join Technician t2
+    -> ON (t1.ssn = t2.ssn);
++----------------+---------------+--------+
+| name           | type          | salary |
++----------------+---------------+--------+
+| Tushar Singh   | Auto Mechanic |  50000 |
+| Saloni Nagar   | Engineer      |  55000 |
+| Lakshita Singh | Auto Mechanic |  30000 |
+| Aravind Aswal  | Engineer      |  90000 |
+| Harish chandra | Engineer      |  45000 |
++----------------+---------------+--------+
